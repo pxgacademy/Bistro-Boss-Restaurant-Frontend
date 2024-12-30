@@ -9,6 +9,9 @@ export default {
     extend: {
       colors: {
         primaryColor: "#D99904",
+        darkOne: "#151515",
+        darkTwo: "#444444",
+        darkThree: "#737373",
       },
       fontFamily: {
         Cinzel: ["Cinzel", "serif"],
