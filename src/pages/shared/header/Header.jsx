@@ -11,17 +11,17 @@ const Header = () => {
       <NavLink onClick={() => setIsMobileMenu(false)} to="/">
         Home
       </NavLink>
-      <NavLink onClick={() => setIsMobileMenu(false)} to="/contact-us">
-        contact us
-      </NavLink>
-      <NavLink onClick={() => setIsMobileMenu(false)} to="/dashboard">
-        dashboard
-      </NavLink>
       <NavLink onClick={() => setIsMobileMenu(false)} to="/our-menu">
         our menu
       </NavLink>
       <NavLink onClick={() => setIsMobileMenu(false)} to="/our-shop">
         our shop
+      </NavLink>
+      <NavLink onClick={() => setIsMobileMenu(false)} to="/contact-us">
+        contact us
+      </NavLink>
+      <NavLink onClick={() => setIsMobileMenu(false)} to="/dashboard">
+        dashboard
       </NavLink>
     </>
   );

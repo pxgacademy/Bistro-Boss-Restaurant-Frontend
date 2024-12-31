@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAPI_LINK } from "../../../hooks/useAPI_LINKS";
 import MenuCard from "./MenuCard";
 
-const Menu = ({ link }) => {
+const Menu = ({ link, className = "" }) => {
   const API_LINK = useAPI_LINK();
   const [items, setItems] = useState([]);
 
@@ -21,7 +21,7 @@ const Menu = ({ link }) => {
   }, [link]);
 
   return (
-    <div className="grid md:grid-cols-2 gap-y-4 gap-x-6">
+    <div className={`grid md:grid-cols-2 gap-y-4 gap-x-6 mt-10 ${className}`}>
       {items?.map((item) => (
         <MenuCard key={item._id} item={item} />
       ))}
@@ -31,6 +31,7 @@ const Menu = ({ link }) => {
 
 Menu.propTypes = {
   link: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default Menu;
