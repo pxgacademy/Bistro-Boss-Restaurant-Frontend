@@ -60,16 +60,18 @@ const Home = () => {
         <div className="absolute w-full h-full bg-black/50 flex items-center justify-center">
           <div className="max-w-7xl mx-auto">
             <SectionTitle
-              title="CHEF RECOMMENDS"
-              subTitle="Should Try"
+              title="FROM OUR MENU"
+              subTitle="Check it out"
               color="text-white"
             />
 
             <div className="grid md:grid-cols-2 gap-6 lg:gap-16 items-center mt-14">
               <img src={featuredImg} alt="featured image" />
               <div className="text-white">
-                <p className="text-xl">March 20, 2023</p>
-                <h3 className="text-2xl">WHERE CAN I GET SOME?</h3>
+                <p className="text-xl abd">March 20, 2023</p>
+                <h3 className="text-2xl abd-hover:text-red-400">
+                  WHERE CAN I GET SOME?
+                </h3>
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
                   voluptate facere, deserunt dolores maiores quod nobis quas
@@ -82,7 +84,7 @@ const Home = () => {
         </div>
       </section>
 
-      <Testimonials/>
+      <Testimonials />
     </section>
   );
 };

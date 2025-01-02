@@ -5,8 +5,14 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import "./reactTabStyles.css";
 import ShopCards from "../shopCards/ShopCards";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 
 const OurShop = () => {
+  const { data } = useLoaderData();
+  const {menu_name} = useParams()
+  const menu_items = ['salad', 'pizza', 'soups', 'desserts', 'drinks']
+  const index = menu_items.indexOf(menu_name)
+
   return (
     <section>
       <Cover
@@ -18,29 +24,29 @@ const OurShop = () => {
       />
 
       <Section className="max-w-7xl mb-10 md:mb-16">
-        <Tabs>
+        <Tabs selectedIndex={index}>
           <TabList>
-            <Tab>SALAD</Tab>
-            <Tab>PIZZA</Tab>
-            <Tab>SOUPS</Tab>
-            <Tab>DESSERTS</Tab>
-            <Tab>DRINKS</Tab>
+            <Tab><Link to='/our-shop/salad'>SALAD</Link></Tab>
+            <Tab><Link to='/our-shop/pizza'>PIZZA</Link></Tab>
+            <Tab><Link to='/our-shop/soups'>SOUPS</Link></Tab>
+            <Tab><Link to='/our-shop/desserts'>DESSERTS</Link></Tab>
+            <Tab><Link to='/our-shop/drinks'>DRINKS</Link></Tab>
           </TabList>
 
           <TabPanel>
-            <ShopCards category="salad" />
+            <ShopCards category="salad" categoryCount={data} />
           </TabPanel>
           <TabPanel>
-            <ShopCards category="pizza" />
+            <ShopCards category="pizza" categoryCount={data} />
           </TabPanel>
           <TabPanel>
-            <ShopCards category="soup" />
+            <ShopCards category="soup" categoryCount={data} />
           </TabPanel>
           <TabPanel>
-            <ShopCards category="dessert" />
+            <ShopCards category="dessert" categoryCount={data} />
           </TabPanel>
           <TabPanel>
-            <ShopCards category="drinks" />
+            <ShopCards category="drinks" categoryCount={data} />
           </TabPanel>
         </Tabs>
       </Section>

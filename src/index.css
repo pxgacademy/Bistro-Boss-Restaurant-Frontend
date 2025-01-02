@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,14 +8,42 @@ html {
   scroll-behavior: smooth;
 }
 
+div > .active {
+  color: yellow;
+}
+
 @layer utilities {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
-}
 
-div > .active{
-  color: yellow;
+  /* Login and sign up page styles */
+  .inputParent {
+    @apply flex flex-col relative;
+  }
+
+  .inputBox {
+    @apply bg-transparent border-[1px] border-slate-500 p-4 rounded-md outline-none;
+  }
+
+  .inputBox:valid,
+  .inputBox:focus {
+    @apply border-primaryColor;
+  }
+
+  .inputBox ~ span {
+    @apply absolute text-slate-500 p-4 uppercase tracking-wide pointer-events-none;
+  }
+
+  .inputBox:valid ~ span,
+  .inputBox:focus ~ span {
+    @apply py-[3px] bg-primaryColor transform translate-x-5 -translate-y-3 text-sm tracking-normal text-white;
+  }
+
+  /* Login page Captcha styles*/
+  #captcha > div {
+    @apply flex items-center gap-x-3;
+  }
 }
