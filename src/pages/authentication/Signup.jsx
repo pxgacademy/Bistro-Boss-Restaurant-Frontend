@@ -1,6 +1,6 @@
 import AuthContainer from "./AuthContainer";
 import img from "../../assets/others/authentication2.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialSignin from "./SocialSignin";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -8,14 +8,19 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useContextValue } from "../../hooks/useContextValue";
 import Swal from "sweetalert2";
+import useCreateUser from "../../hooks/useCreateUser";
+import Loading from "../../components/loading/Loading";
 
 const Signup = () => {
   const { createUser, updateUser, setUser } = useContextValue();
-  const navigate = useNavigate()
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const [userImg, setUserImg] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isEye, setIsEye] = useState(false);
   const [errMsg, setErrMsg] = useState(null);
+
+  const [handleCreateUser, isPending] = useCreateUser();
 
   const {
     register,
@@ -41,11 +46,17 @@ const Signup = () => {
         formData
       );
       data.image = res?.data?.data?.display_url;
-      data.imageThumb = res?.data?.data?.thumb?.url;
 
       const { user } = await createUser(data?.email, data?.password);
+      await updateUser({ displayName: data?.name, photoURL: data?.image });
       setUser(user);
-      updateUser({ displayName: data?.name, photoURL: data?.image });
+
+      handleCreateUser({
+        email: data?.email,
+        name: data?.name,
+        image: data?.image,
+      });
+
       Swal.fire({
         title: "User Created Successfully!",
         icon: "success",
@@ -54,19 +65,14 @@ const Signup = () => {
         timer: 2000,
       });
       reset();
-      setUserImg(null)
+      setUserImg(null);
       setSelectedImage(null);
-      navigate('/')
+      navigate(state?.goTo || "/");
     } catch (error) {
       console.log(error.message);
       return;
     }
-
-    console.log(data);
-    // console.log(userImg);
   };
-
-  // console.log(watch("example"));
 
   const handleImageChange = (event) => {
     setErrMsg(null);
@@ -82,6 +88,8 @@ const Signup = () => {
     e.stopPropagation();
     setIsEye(!isEye);
   };
+
+  if (isPending) return <Loading />;
 
   return (
     <AuthContainer>

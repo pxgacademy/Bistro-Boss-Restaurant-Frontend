@@ -23,7 +23,7 @@ const ShopCards = ({ category, categoryCount, className = "" }) => {
         );
         setItems(response.data);
       } catch (error) {
-        alert(error.message);
+        // alert(error.message);
       } finally {
         setIsLoading(false);
       }

@@ -13,7 +13,7 @@ const useAPI_Loader = (link) => {
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
-        alert(error.message);
+        // alert(error.message);
       }
     };
 

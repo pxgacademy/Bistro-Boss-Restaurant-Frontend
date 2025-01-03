@@ -11,8 +11,8 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import axios from "axios";
-import Swal from "sweetalert2";
+// import axios from "axios";
+// import Swal from "sweetalert2";
 // import axios from "axios";
 // import Swal from "sweetalert2";
 
@@ -21,24 +21,6 @@ const APIcontext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
-
-  /*
-  useEffect(() => {
-    const loadUserId = async() => {
-      try {
-        const {data} = await axios(`${API_LINK}/users/${user?.email}`)
-        setUser({...user, userId: data});
-      } catch (err) {
-        Swal.fire({
-          title: err.message,
-          icon: "error",
-        })
-        setUser(null)
-      }
-    }
-    if(user) loadUserId()
-  }, [user]);
-  */
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -97,10 +79,14 @@ const APIcontext = ({ children }) => {
 
       //   if (currentUser?.email) sendToken();
       //   else deleteToken();
+
+      
     });
 
     return () => unsubscribe();
   }, []);
+
+  console.log(user);
 
   const value = {
     user,

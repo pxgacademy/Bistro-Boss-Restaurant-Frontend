@@ -13,7 +13,7 @@ const Menu = ({ link, className = "" }) => {
         const response = await API_LINK(`/${link}`);
         setItems(response.data);
       } catch (error) {
-        alert(error.message);
+        // alert(error.message);
       }
     };
 

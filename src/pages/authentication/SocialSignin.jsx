@@ -2,14 +2,29 @@ import PropTypes from "prop-types";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import { useContextValue } from "../../hooks/useContextValue";
 import Swal from "sweetalert2";
+import useCreateUser from "../../hooks/useCreateUser";
+import Loading from "../../components/loading/Loading";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SocialSignin = ({ text = "" }) => {
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const { setUser, googleSignIn } = useContextValue();
+  const [handleCreateUser, isPending] = useCreateUser();
 
   const handleGoogleSignIn = async () => {
     try {
-      const googleUser = await googleSignIn();
-      setUser(googleUser.user);
+      await googleSignIn().then((result) => {
+        const user = result.user;
+        console.log(user);
+        handleCreateUser({
+          email: user?.email,
+          name: user?.displayName ? user.displayName : "",
+          image: user?.photoURL ? user?.photoURL : "",
+        });
+        setUser(user);
+        navigate(state?.goTo || "/");
+      });
     } catch (error) {
       Swal.fire({
         title: "Error",
@@ -19,6 +34,8 @@ const SocialSignin = ({ text = "" }) => {
       });
     }
   };
+
+  if (isPending) return <Loading />;
 
   return (
     <div>
