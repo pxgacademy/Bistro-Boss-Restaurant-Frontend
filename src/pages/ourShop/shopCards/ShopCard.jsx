@@ -3,24 +3,26 @@ import Button from "../../../components/button/Button";
 import { useMutation } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useContextValue } from "../../../hooks/useContextValue";
-import { useAPI_LINK } from "../../../hooks/useAPI_LINKS";
+
 import Swal from "sweetalert2";
 import MiniLoading from "../../../components/loading/MiniLoading";
+import useSecureAPI from "../../../hooks/useSecureAPI";
+import useCart from "../../../hooks/useCart";
 
-const Card = ({ item }) => {
+const ShopCard = ({ item }) => {
   const navigate = useNavigate();
   const { user } = useContextValue();
+  const [, , refetch] = useCart();
   const { pathname } = useLocation();
-  const API_LINK = useAPI_LINK();
+  const secureAPI = useSecureAPI();
   const { _id, image, name, recipe } = item || {};
-
-
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (value) => {
-      await API_LINK.post("/order-foods", value);
+      await secureAPI.post("/carts", value);
     },
     onSuccess: () => {
+      refetch();
       Swal.fire({
         position: "center",
         icon: "success",
@@ -36,14 +38,28 @@ const Card = ({ item }) => {
       }),
   });
 
+ 
+
   const handleDataSend = () => {
     if (!user) {
-      navigate("/login", { state: { goTo: pathname } });
+      Swal.fire({
+        title: "You are not logged in!",
+        text: "You need to be logged in to add items to cart!",
+        icon: "info",
+        confirmButtonText: "Login!",
+        cancelButtonText: "Cancel",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed)
+          navigate("/login", { state: { goTo: pathname } });
+      });
       return;
     }
     const data = {
       menuId: _id,
-      customer: { name: user?.displayName, email: user?.email },
+      customer_email: user?.email,
     };
     mutateAsync(data);
   };
@@ -68,8 +84,8 @@ const Card = ({ item }) => {
   );
 };
 
-Card.propTypes = {
+ShopCard.propTypes = {
   item: PropTypes.object.isRequired,
 };
 
-export default Card;
+export default ShopCard;

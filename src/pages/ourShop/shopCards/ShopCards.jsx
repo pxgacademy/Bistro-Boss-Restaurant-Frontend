@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { useAPI_LINK } from "../../../hooks/useAPI_LINKS";
+import usePublicAPI from "../../../hooks/usePublicAPI";
 import { useEffect, useState } from "react";
-import Card from "./Card";
+import ShopCard from "./ShopCard";
+import Loading from "../../../components/loading/Loading";
 
 const ShopCards = ({ category, categoryCount, className = "" }) => {
-  const API_LINK = useAPI_LINK();
+  const publicAPI = usePublicAPI();
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { count } = categoryCount.find((item) => item._id === category);
@@ -18,26 +19,22 @@ const ShopCards = ({ category, categoryCount, className = "" }) => {
   useEffect(() => {
     const handleMenuLoading = async () => {
       try {
-        const response = await API_LINK(
+        const response = await publicAPI(
           `/menu?category=${category}&skip=${skip}&limit=${itemPerPage}`
         );
         setItems(response.data);
       } catch (error) {
-        // alert(error.message);
+        console.log(error.message);
       } finally {
         setIsLoading(false);
       }
     };
 
     handleMenuLoading();
+    // eslint-disable-next-line
   }, [category, itemPerPage, selectedPage]);
 
-  if (isLoading)
-    return (
-      <div className="w-full min-h-80 flex items-center justify-center">
-        Loading...
-      </div>
-    );
+  if (isLoading) return <Loading />;
 
   return (
     <>
@@ -45,7 +42,7 @@ const ShopCards = ({ category, categoryCount, className = "" }) => {
         className={`grid sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-6 md:gap-10 mt-10 ${className}`}
       >
         {items?.map((item) => (
-          <Card key={item._id} item={item} />
+          <ShopCard key={item._id} item={item} />
         ))}
       </div>
 
@@ -105,7 +102,7 @@ const ShopCards = ({ category, categoryCount, className = "" }) => {
 };
 
 ShopCards.propTypes = {
-  category: PropTypes.string.isRequired,
+  category: PropTypes.string,
   categoryCount: PropTypes.array,
   className: PropTypes.string,
 };

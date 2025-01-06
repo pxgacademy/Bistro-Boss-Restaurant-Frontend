@@ -45,13 +45,12 @@ const Home = () => {
 
         <section className="w-full py-16 mt-16 md:mt-24 bg-darkOne text-white text-center text-4xl">
           <p>
-            Call Us: <span className="font-Cinzel">+88 0192345678910</span>{" "}
+            Call Us: <span className="font-Cinzel">+88 0192345678910</span>
           </p>
         </section>
 
         <section className="mt-16 md:mt-24">
           <SectionTitle title="CHEF RECOMMENDS" subTitle="Should Try" />
-
           <ChefRecommends />
         </section>
       </section>
@@ -62,7 +61,7 @@ const Home = () => {
             <SectionTitle
               title="FROM OUR MENU"
               subTitle="Check it out"
-              color="text-white"
+              colors="text-white"
             />
 
             <div className="grid md:grid-cols-2 gap-6 lg:gap-16 items-center mt-14">

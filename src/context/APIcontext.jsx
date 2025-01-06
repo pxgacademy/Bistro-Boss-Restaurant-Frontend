@@ -17,7 +17,6 @@ import {
 // import Swal from "sweetalert2";
 
 const APIcontext = ({ children }) => {
-  // const API_LINK = import.meta.env.VITE_API_LINK;
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
@@ -85,8 +84,6 @@ const APIcontext = ({ children }) => {
 
     return () => unsubscribe();
   }, []);
-
-  console.log(user);
 
   const value = {
     user,

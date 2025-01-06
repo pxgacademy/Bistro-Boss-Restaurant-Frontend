@@ -1,13 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { useAPI_LINK } from "./useAPI_LINKS";
+
 import Swal from "sweetalert2";
+import usePublicAPI from "./usePublicAPI";
 
 const useCreateUser = () => {
-  const API_LINK = useAPI_LINK();
+  const publicAPI = usePublicAPI();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (value) => {
-      await API_LINK.post("/users", value);
+      await publicAPI.post("/users", value);
     },
     onError: (error) =>
       Swal.fire({

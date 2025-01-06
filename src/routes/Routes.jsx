@@ -7,6 +7,9 @@ import axios from "axios";
 import Login from "../pages/authentication/Login";
 import Signup from "../pages/authentication/Signup";
 import PrivateRoutes from "./PrivateRoutes";
+import Dashboard from "../layout/Dashboard";
+import MyCart from "../pages/userPages/myCart/MyCart";
+import AllUsers from "../pages/adminPages/allUsers/AllUsers";
 const API_LINK = import.meta.env.VITE_API_LINK;
 
 export const router = createBrowserRouter([
@@ -30,6 +33,27 @@ export const router = createBrowserRouter([
         path: "our-shop/:menu_name",
         element: <OurShop />,
         loader: () => axios.get(`${API_LINK}/menu/category-counts`),
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoutes>
+        <Dashboard />
+      </PrivateRoutes>
+    ),
+    children: [
+      // admin routes
+      {
+        path: "all-users",
+        element: <AllUsers />,
+      },
+
+      // user routes
+      {
+        path: "my-cart",
+        element: <MyCart />,
       },
     ],
   },

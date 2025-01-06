@@ -1,26 +1,22 @@
-import { useEffect, useState } from "react";
-import { useAPI_LINK } from "./useAPI_LINKS";
+import { useQuery } from "@tanstack/react-query";
+import useSecureAPI from "./useSecureAPI";
 
-const useAPI_Loader = (link) => {
-  const API_LINK = useAPI_LINK();
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState([]);
+const useAPI_Loader = (link, key = "") => {
+  const secureAPI = useSecureAPI();
 
-  useEffect(() => {
-    const handleMenuLoading = async () => {
-      try {
-        const response = await API_LINK(`/${link}`);
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        // alert(error.message);
-      }
-    };
+  const { data, error, isPending, refetch } = useQuery({
+    queryKey: [key],
+    queryFn: async () => {
+      const { data } = await secureAPI.get(`/${link}`);
+      return data;
+    },
+    // onError: (error) => {
+    //   console.error("Error fetching cart data:", error);
+    // },
+    initialData: [],
+  });
 
-    handleMenuLoading();
-  }, [link]);
-
-  return { data, isLoading };
+  return [data, isPending, refetch, error];
 };
 
 export default useAPI_Loader;

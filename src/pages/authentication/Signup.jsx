@@ -120,7 +120,9 @@ const Signup = () => {
               />
               <label
                 htmlFor="uploadFile"
-                className="inputBox mb-5 cursor-pointer flex items-center gap-x-2"
+                className={`border ${
+                  selectedImage ? "border-primaryColor" : "border-slate-500"
+                } rounded-lg px-3 min-h-[62px] mb-5 cursor-pointer flex items-center gap-x-2`}
               >
                 <span className="bg-primaryColor px-3 py-1 text-white rounded-md">
                   Upload Image
@@ -129,7 +131,12 @@ const Signup = () => {
                   <span>{userImg && `Name: ${userImg?.name}`}</span>
                   <span>{userImg && `Size: ${userImg?.size} bytes`}</span>
                 </div>
-                <img className="w-12 rounded-md" src={selectedImage} />
+                {selectedImage && (
+                  <img
+                    className="w-12 h-12 object-cover rounded-md"
+                    src={selectedImage}
+                  />
+                )}
                 {errMsg && <p className="text-error">{errMsg}</p>}
               </label>
             </label>

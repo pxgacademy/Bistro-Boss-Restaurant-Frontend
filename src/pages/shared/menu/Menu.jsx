@@ -1,16 +1,21 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { useAPI_LINK } from "../../../hooks/useAPI_LINKS";
+
 import MenuCard from "./MenuCard";
+import usePublicAPI from "../../../hooks/usePublicAPI";
 
 const Menu = ({ link, className = "" }) => {
-  const API_LINK = useAPI_LINK();
+  const publicAPI = usePublicAPI();
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     const handleMenuLoading = async () => {
       try {
-        const response = await API_LINK(`/${link}`);
+        const response = await publicAPI
+        
+        
+        
+        (`/${link}`);
         setItems(response.data);
       } catch (error) {
         // alert(error.message);

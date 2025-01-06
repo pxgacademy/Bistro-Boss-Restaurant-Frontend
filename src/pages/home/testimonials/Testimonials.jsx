@@ -5,9 +5,11 @@ import useAPI_Loader from "../../../hooks/useAPI_Loader";
 import { FaQuoteLeft } from "react-icons/fa";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import MiniLoading from "../../../components/loading/MiniLoading";
 
 const Testimonials = () => {
-  const { data } = useAPI_Loader("rewards");
+  const [data, isPending] = useAPI_Loader("reviews", "reviews");
+  if (isPending) return <MiniLoading/>;
   return (
     <section className="my-16 md:my-24 max-w-7xl mx-auto">
       <SectionTitle title="TESTIMONIALS" subTitle="What Our Clients Say" />

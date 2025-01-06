@@ -15,6 +15,7 @@ export default {
       },
       fontFamily: {
         Cinzel: ["Cinzel", "serif"],
+        poppins: ["Poppins", "san-serif"],
       },
     },
   },
