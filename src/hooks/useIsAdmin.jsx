@@ -6,13 +6,13 @@ const useIsAdmin = () => {
   const secureAPI = useSecureAPI();
   const { user } = useContextValue();
 
-  const { data, isLoading } = useQuery({
+  const { data = false, isLoading } = useQuery({
     queryKey: ["isAdmin", user?.email],
     queryFn: async () => {
       const { data } = await secureAPI.get(`/users/admin/${user?.email}`);
       return data.admin;
     },
-    initialData: false,
+    enabled: !!user?.email,
   });
 
   return [data, isLoading];

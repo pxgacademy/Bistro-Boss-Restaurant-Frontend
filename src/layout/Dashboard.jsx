@@ -4,12 +4,13 @@ import { FaBars, FaCalendarAlt, FaCalendarCheck, FaHistory, FaShoppingCart, FaSt
 import { ImSpoonKnife } from "react-icons/im";
 import { IoBagHandle, IoClose, IoList } from "react-icons/io5";
 import { MdAssignmentTurnedIn, MdEmail } from "react-icons/md";
-import { Navigate, NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import useIsAdmin from "../hooks/useIsAdmin";
+import Loading from "../components/loading/Loading";
 
 const Dashboard = () => {
   const [isMenuList, setIsMenuList] = useState(window.innerWidth >= 1024)
-  const [isAdmin] = useIsAdmin()
+  const [isAdmin, isLoading] = useIsAdmin()
   // const {pathname} = useLocation()
 
   // TODO: enable the functionality 
@@ -18,6 +19,8 @@ const Dashboard = () => {
   //   if(isAdmin) return <Navigate to='/dashboard/admin' />
   //   else return <Navigate to='/dashboard/user' />
   // }
+
+  if(isLoading) return <Loading/>
 
   return (
     <section className="flex font-Cinzel uppercase">

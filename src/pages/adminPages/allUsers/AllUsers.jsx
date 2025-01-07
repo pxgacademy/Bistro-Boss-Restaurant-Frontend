@@ -18,7 +18,7 @@ const AllUsers = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["allUsers"],
     queryFn: async () => {
       const { data } = await secureAPI.get(`/users`);
       return data;
@@ -26,9 +26,7 @@ const AllUsers = () => {
     initialData: [],
   });
 
-  const handleUpdateAdmin = () => {
-    handleUpdate({});
-  };
+
 
   if (isLoading) return <Loading />;
 

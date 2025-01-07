@@ -3,7 +3,7 @@ import SectionTitle from "../sectionTitle/SectionTitle";
 
 const DashboardContainer = ({
   children,
-  className = "",
+  className = "bg-[#F3F3F3]",
   title,
   subTitle,
   colors,
@@ -12,7 +12,7 @@ const DashboardContainer = ({
 }) => {
   return (
     <section
-      className={`w-full min-h-screen p-5 md:p-10 bg-[#F3F3F3] font-poppins ${className}`}
+      className={`w-full min-h-screen p-5 md:p-10 font-poppins ${className}`}
     >
       {title && (
         <SectionTitle

@@ -11,7 +11,7 @@ const AdminRoutes = ({ children }) => {
 
   if (isLoading || loading) return <Loading />;
   if (isAdmin && user) return children;
-  return <Navigate state={{ goTo: pathname }} to="/login" replace />;
+  else return <Navigate state={{ goTo: pathname }} to="/login" replace />;
 };
 
 AdminRoutes.propTypes = {

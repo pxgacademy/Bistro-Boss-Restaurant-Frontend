@@ -12,6 +12,7 @@ import useCreateUser from "../../hooks/useCreateUser";
 import Loading from "../../components/loading/Loading";
 
 const Signup = () => {
+  const IMG_API_LINK = import.meta.env.VITE_IMG_API;
   const { createUser, updateUser, setUser } = useContextValue();
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -37,14 +38,10 @@ const Signup = () => {
     }
 
     try {
-      const IMG_API = import.meta.env.VITE_IMG_API;
       const formData = new FormData();
       formData.append("image", userImg);
 
-      const res = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${IMG_API}`,
-        formData
-      );
+      const res = await axios.post(IMG_API_LINK, formData);
       data.image = res?.data?.data?.display_url;
 
       const { user } = await createUser(data?.email, data?.password);

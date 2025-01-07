@@ -11,6 +11,7 @@ import Dashboard from "../layout/Dashboard";
 import MyCart from "../pages/userPages/myCart/MyCart";
 import AllUsers from "../pages/adminPages/allUsers/AllUsers";
 import AdminRoutes from "./AdminRoutes";
+import AddItems from "../pages/adminPages/addAnItem/AddItems";
 const API_LINK = import.meta.env.VITE_API_LINK;
 
 export const router = createBrowserRouter([
@@ -39,13 +40,17 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: (
-      <PrivateRoutes>
-        <Dashboard />
-      </PrivateRoutes>
-    ),
+    element: <Dashboard />,
     children: [
       // admin routes
+      {
+        path: "add-items",
+        element: (
+          <AdminRoutes>
+            <AddItems />
+          </AdminRoutes>
+        ),
+      },
       {
         path: "all-users",
         element: (
@@ -58,7 +63,11 @@ export const router = createBrowserRouter([
       // user routes
       {
         path: "my-cart",
-        element: <MyCart />,
+        element: (
+          <PrivateRoutes>
+            <MyCart />
+          </PrivateRoutes>
+        ),
       },
     ],
   },

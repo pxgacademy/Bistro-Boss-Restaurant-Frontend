@@ -11,7 +11,6 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import axios from "axios";
 import Swal from "sweetalert2";
 import usePublicAPI from "../hooks/usePublicAPI";
 
@@ -54,25 +53,29 @@ const APIcontext = ({ children }) => {
         try {
           const { data } = await publicAPI.post(`/jwt`, user);
           if (data.token) localStorage.setItem("access_token", data.token);
+          setLoading(false);
         } catch (err) {
           setUser(null);
+          setLoading(false);
           Swal.fire({
             title: err.message,
             icon: "error",
           });
-        } finally {
-          setLoading(false);
         }
       };
 
       // delete jwt token
-      const deleteToken = async () => localStorage.removeItem("access_token");
+      const deleteToken = async () => {
+        localStorage.removeItem("access_token");
+        setLoading(false);
+      };
 
       if (currentUser?.email) sendToken();
       else deleteToken();
     });
 
     return () => unsubscribe();
+    // eslint-disable-next-line
   }, []);
 
   const value = {
