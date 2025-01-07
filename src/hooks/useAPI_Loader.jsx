@@ -1,22 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import useSecureAPI from "./useSecureAPI";
+import usePublicAPI from "./usePublicAPI";
 
 const useAPI_Loader = (link, key = "") => {
-  const secureAPI = useSecureAPI();
+  const publicAPI = usePublicAPI();
 
-  const { data, error, isPending, refetch } = useQuery({
-    queryKey: [key],
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: [key, link],
     queryFn: async () => {
-      const { data } = await secureAPI.get(`/${link}`);
+      const { data } = await publicAPI.get(`/${link}`);
       return data;
     },
-    // onError: (error) => {
-    //   console.error("Error fetching cart data:", error);
-    // },
     initialData: [],
   });
 
-  return [data, isPending, refetch, error];
+  return [data, isLoading, refetch, error];
 };
 
 export default useAPI_Loader;

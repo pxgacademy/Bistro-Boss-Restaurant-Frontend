@@ -25,7 +25,8 @@ const Dashboard = () => {
   return (
     <section className="flex font-Cinzel uppercase">
      
-      <section className={`w-full ${isMenuList? 'max-w-72':'max-w-[56px]'} min-h-screen bg-primaryColor relative overflow-hidden`}>
+      <section className={`w-full ${isMenuList? 'max-w-72':'max-w-[56px]'} min-h-screen relative`}>
+      <section className={`w-full ${isMenuList? 'max-w-72':'max-w-[56px]'} min-h-screen bg-primaryColor fixed top-0 z-10 overflow-hidden`}>
       <button onClick={()=> setIsMenuList(!isMenuList)} className="absolute lg:hidden right-2 top-2 btn btn-circle btn-xs btn-neutral text-white z-10">
       {isMenuList? <IoClose />:<FaBars />}
       </button>
@@ -70,6 +71,7 @@ const Dashboard = () => {
             <NavLink to="/contact-us"><button><span><MdEmail /></span> {isMenuList && 'contact us'}</button></NavLink>
           </div>
         </div>
+      </section>
       </section>
       <section className="grow">
         <Outlet />

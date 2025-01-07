@@ -12,6 +12,8 @@ import MyCart from "../pages/userPages/myCart/MyCart";
 import AllUsers from "../pages/adminPages/allUsers/AllUsers";
 import AdminRoutes from "./AdminRoutes";
 import AddItems from "../pages/adminPages/addAnItem/AddItems";
+import ManageItems from "../pages/adminPages/manageItems/ManageItems";
+import UpdateItems from "../pages/adminPages/updateItems/UpdateItems";
 const API_LINK = import.meta.env.VITE_API_LINK;
 
 export const router = createBrowserRouter([
@@ -50,6 +52,23 @@ export const router = createBrowserRouter([
             <AddItems />
           </AdminRoutes>
         ),
+      },
+      {
+        path: "manage-items",
+        element: (
+          <AdminRoutes>
+            <ManageItems />
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "manage-items/update/:id",
+        element: (
+          <AdminRoutes>
+            <UpdateItems />
+          </AdminRoutes>
+        ),
+        loader: ({params}) => axios.get(`${API_LINK}/menu/${params.id}`),
       },
       {
         path: "all-users",

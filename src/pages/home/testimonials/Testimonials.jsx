@@ -8,8 +8,8 @@ import "@smastrom/react-rating/style.css";
 import MiniLoading from "../../../components/loading/MiniLoading";
 
 const Testimonials = () => {
-  const [data, isPending] = useAPI_Loader("reviews", "reviews");
-  if (isPending) return <MiniLoading/>;
+  const [data, isLoading] = useAPI_Loader("reviews", "reviews");
+  if (isLoading) return <MiniLoading/>;
   return (
     <section className="my-16 md:my-24 max-w-7xl mx-auto">
       <SectionTitle title="TESTIMONIALS" subTitle="What Our Clients Say" />
