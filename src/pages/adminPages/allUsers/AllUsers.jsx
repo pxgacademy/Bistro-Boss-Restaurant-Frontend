@@ -5,11 +5,13 @@ import { FaTrashAlt, FaUser } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
 import useDelete from "../../../hooks/useDelete";
 import Loading from "../../../components/loading/Loading";
+import usePatch from "../../../hooks/usePatch";
 
 const AllUsers = () => {
   // const { user } = useContextValue();
   const secureAPI = useSecureAPI();
   const handleDelete = useDelete();
+  const handleUpdate = usePatch();
 
   const {
     data: users,
@@ -24,6 +26,10 @@ const AllUsers = () => {
     initialData: [],
   });
 
+  const handleUpdateAdmin = () => {
+    handleUpdate({});
+  };
+
   if (isLoading) return <Loading />;
 
   return (
@@ -36,7 +42,7 @@ const AllUsers = () => {
         <div className="overflow-x-auto rounded-t-2xl mt-5">
           <table className="table table-zebra font-poppins normal-case">
             {/* head */}
-            <thead className=" bg-primaryColor text-white uppercase">
+            <thead className=" bg-primaryColor text-white uppercase font-normal">
               <tr>
                 <th>#</th>
                 <th>Name</th>
@@ -53,11 +59,23 @@ const AllUsers = () => {
                   <td>{user.email}</td>
                   <td className="text-center">
                     <button
-                      className={`btn ${
+                      onClick={() =>
+                        handleUpdate({
+                          link: `/users/admin/${user._id}`,
+                          data: { role: "admin" },
+                          questionText: `You want to admin to ${user.email}`,
+                          successText: `${user.name} is admin now!`,
+                          refetch,
+                        })
+                      }
+                      className={`btn disabled:bg-green-500 disabled:text-white ${
                         user.role === "admin"
                           ? "btn-success text-white"
                           : "btn-secondary"
                       }`}
+                      disabled={
+                        user.role === "admin" && user.role !== "super-admin"
+                      }
                     >
                       {user.role === "admin" ? (
                         <MdAdminPanelSettings />
@@ -75,7 +93,7 @@ const AllUsers = () => {
                           refetch,
                         })
                       }
-                      className="btn btn-error  text-white"
+                      className="btn bg-red-500 hover:bg-red-600  text-white"
                     >
                       <FaTrashAlt />
                     </button>

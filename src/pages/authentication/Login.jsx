@@ -27,12 +27,14 @@ const Login = () => {
 
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const captcha = e.target.captcha.value;
+    // const captcha = e.target.captcha.value;
 
-    if (!validateCaptcha(captcha)) {
-      setErrMsg("Captcha didn't match");
-      return;
-    }
+    // TODO: enable the captcha functionality
+
+    // if (!validateCaptcha(captcha)) {
+    //   setErrMsg("Captcha didn't match");
+    //   return;
+    // }
 
     try {
       const { user } = await signInUser(email, password);

@@ -11,12 +11,12 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-// import axios from "axios";
-// import Swal from "sweetalert2";
-// import axios from "axios";
-// import Swal from "sweetalert2";
+import axios from "axios";
+import Swal from "sweetalert2";
+import usePublicAPI from "../hooks/usePublicAPI";
 
 const APIcontext = ({ children }) => {
+  const publicAPI = usePublicAPI();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
@@ -47,39 +47,29 @@ const APIcontext = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false); // remove it when jwt will open
 
       // send jwt token
-      // const sendToken = async () => {
-      //   const user = { email: currentUser?.email };
-      //   try {
-      //     await axios.post(`${API_LINK}/jwt`, user, { withCredentials: true });
-      //     setLoading(false);
-      //   } catch (err) {
-      //     Swal.fire({
-      //       title: err.message,
-      //       icon: "error",
-      //     });
-      //   }
-      // };
+      const sendToken = async () => {
+        const user = { email: currentUser?.email };
+        try {
+          const { data } = await publicAPI.post(`/jwt`, user);
+          if (data.token) localStorage.setItem("access_token", data.token);
+        } catch (err) {
+          setUser(null);
+          Swal.fire({
+            title: err.message,
+            icon: "error",
+          });
+        } finally {
+          setLoading(false);
+        }
+      };
 
       // delete jwt token
-      // const deleteToken = async () => {
-      //   try {
-      //     await axios.delete(`${API_LINK}/logout`, { withCredentials: true });
-      //     setLoading(false);
-      //   } catch (err) {
-      //     Swal.fire({
-      //       title: err.message,
-      //       icon: "error",
-      //     });
-      //   }
-      // };
+      const deleteToken = async () => localStorage.removeItem("access_token");
 
-      //   if (currentUser?.email) sendToken();
-      //   else deleteToken();
-
-      
+      if (currentUser?.email) sendToken();
+      else deleteToken();
     });
 
     return () => unsubscribe();

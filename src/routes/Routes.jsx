@@ -10,6 +10,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "../layout/Dashboard";
 import MyCart from "../pages/userPages/myCart/MyCart";
 import AllUsers from "../pages/adminPages/allUsers/AllUsers";
+import AdminRoutes from "./AdminRoutes";
 const API_LINK = import.meta.env.VITE_API_LINK;
 
 export const router = createBrowserRouter([
@@ -47,7 +48,11 @@ export const router = createBrowserRouter([
       // admin routes
       {
         path: "all-users",
-        element: <AllUsers />,
+        element: (
+          <AdminRoutes>
+            <AllUsers />
+          </AdminRoutes>
+        ),
       },
 
       // user routes

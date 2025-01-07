@@ -5,14 +5,19 @@ import { ImSpoonKnife } from "react-icons/im";
 import { IoBagHandle, IoClose, IoList } from "react-icons/io5";
 import { MdAssignmentTurnedIn, MdEmail } from "react-icons/md";
 import { Navigate, NavLink, Outlet, useLocation } from "react-router-dom";
+import useIsAdmin from "../hooks/useIsAdmin";
 
 const Dashboard = () => {
   const [isMenuList, setIsMenuList] = useState(window.innerWidth >= 1024)
-  const isAdmin = true;
+  const [isAdmin] = useIsAdmin()
   // const {pathname} = useLocation()
-  
 
-  // if(pathname === '/dashboard') return <Navigate to='/dashboard/admin' />
+  // TODO: enable the functionality 
+
+  // if(pathname === '/dashboard'){
+  //   if(isAdmin) return <Navigate to='/dashboard/admin' />
+  //   else return <Navigate to='/dashboard/user' />
+  // }
 
   return (
     <section className="flex font-Cinzel uppercase">
