@@ -4,22 +4,26 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import usePublicAPI from "../../../hooks/usePublicAPI";
 import useSecureAPI from "../../../hooks/useSecureAPI";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 const UpdateItems = () => {
   const IMG_API_LINK = import.meta.env.VITE_IMG_API;
   const { data: loadedData } = useLoaderData();
+  const navigate = useNavigate();
   const publicAPI = usePublicAPI();
   const secureAPI = useSecureAPI();
 
-  const { name, recipe, image, category, price } = loadedData || {};
+  const { _id, name, recipe, image, category, price } = loadedData || {};
 
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: { name, recipe, category, price },
+  });
 
   const onSubmit = async (item) => {
     const imageFile = { image: item.image[0] };
@@ -31,12 +35,13 @@ const UpdateItems = () => {
         item.image = data.data.display_url;
       } else item.image = image;
       item.price = parseFloat(item.price);
-      if (item) return console.log(item);
-      const res = await secureAPI.post("/menu", item);
-      if (res.data.insertedId) {
+
+      const res = await secureAPI.put(`/menu/${_id}`, item);
+      if (res.data.modifiedCount > 0 && res.data.matchedCount > 0) {
         reset();
+        navigate("/dashboard/manage-items");
         Swal.fire({
-          title: `${item.name} added successfully`,
+          title: `${item.name} updated successfully`,
           icon: "success",
           showConfirmButton: false,
           position: "center",
@@ -55,6 +60,9 @@ const UpdateItems = () => {
     }
   };
 
+  const watchImage = watch("image");
+  const selectedImage = watchImage?.[0] && URL.createObjectURL(watchImage[0]);
+
   return (
     <DashboardContainer className="bg-white">
       <h4 className="text-center text-3xl">Update Item</h4>
@@ -67,7 +75,6 @@ const UpdateItems = () => {
             <input
               className="w-full p-3 mt-2 rounded border-none outline-none"
               type="text"
-              defaultValue={name}
               {...register("name", { required: true })}
             />
             {errors.name && (
@@ -84,7 +91,6 @@ const UpdateItems = () => {
               </label>
               <select
                 className="select select-ghost w-full bg-white mt-2 focus:outline-none focus:border-none"
-                defaultValue={category}
                 {...register("category", { required: true })}
               >
                 <option className="hidden" value="">
@@ -110,7 +116,7 @@ const UpdateItems = () => {
               <input
                 className="w-full p-3 mt-2 rounded border-none outline-none"
                 type="number"
-                defaultValue={price}
+                step="any"
                 {...register("price", { required: true, min: 1 })}
               />
               {errors.price?.type === "required" && (
@@ -133,7 +139,6 @@ const UpdateItems = () => {
             <textarea
               className="w-full min-h-52 max-h-72 p-3 mt-2 rounded border-none outline-none"
               type="text"
-              defaultValue={recipe}
               {...register("recipe", { required: true })}
             />
             {errors.recipe && (
@@ -142,6 +147,11 @@ const UpdateItems = () => {
               </span>
             )}
           </label>
+
+          <img
+            className="w-36 h-24 object-cover mt-4"
+            src={selectedImage || image}
+          />
 
           <label className="block mt-4">
             <input type="file" {...register("image")} />
