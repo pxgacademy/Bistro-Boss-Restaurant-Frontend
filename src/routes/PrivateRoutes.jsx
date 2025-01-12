@@ -7,7 +7,8 @@ const PrivateRoutes = ({ children }) => {
   const { pathname } = useLocation();
   const { user, loading } = useContextValue();
 
-  if (loading) return <Loading />;
+  if (loading) return 
+  <Loading />;
 
   if (user) return children;
   else return <Navigate state={{ goTo: pathname }} to="/login" replace/>;

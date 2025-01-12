@@ -6,10 +6,12 @@ import { IoClose } from "react-icons/io5";
 import { useContextValue } from "../../../hooks/useContextValue";
 import Swal from "sweetalert2";
 import useCart from "../../../hooks/useCart";
+import useIsAdmin from "../../../hooks/useIsAdmin";
 
 const Header = () => {
   const { user, signOutUser } = useContextValue();
   const [isMobileMenu, setIsMobileMenu] = useState(false);
+  const [isAdmin, isLoading] = useIsAdmin();
   const { pathname } = useLocation();
   const [carts] = useCart();
 
@@ -69,7 +71,10 @@ const Header = () => {
       <NavLink onClick={() => setIsMobileMenu(false)} to="/contact-us">
         contact us
       </NavLink>
-      <NavLink onClick={() => setIsMobileMenu(false)} to="/dashboard">
+      <NavLink
+        onClick={() => setIsMobileMenu(false)}
+        to={`/dashboard${isLoading ? "" : isAdmin ? "/admin" : "/user"}`}
+      >
         dashboard
       </NavLink>
     </>

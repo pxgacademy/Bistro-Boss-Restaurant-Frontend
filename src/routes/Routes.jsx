@@ -14,6 +14,10 @@ import AdminRoutes from "./AdminRoutes";
 import AddItems from "../pages/adminPages/addAnItem/AddItems";
 import ManageItems from "../pages/adminPages/manageItems/ManageItems";
 import UpdateItems from "../pages/adminPages/updateItems/UpdateItems";
+import AdminHome from "../pages/adminPages/adminHome/AdminHome";
+import UserHome from "../pages/userPages/userHome/UserHome";
+import Payment from "../pages/userPages/payment/Payment";
+import PaymentHistory from "../pages/userPages/paymentHistory/PaymentHistory";
 const API_LINK = import.meta.env.VITE_API_LINK;
 
 export const router = createBrowserRouter([
@@ -46,6 +50,14 @@ export const router = createBrowserRouter([
     children: [
       // admin routes
       {
+        path: "admin",
+        element: (
+          <AdminRoutes>
+            <AdminHome />
+          </AdminRoutes>
+        ),
+      },
+      {
         path: "add-items",
         element: (
           <AdminRoutes>
@@ -68,7 +80,7 @@ export const router = createBrowserRouter([
             <UpdateItems />
           </AdminRoutes>
         ),
-        loader: ({params}) => axios.get(`${API_LINK}/menu/${params.id}`),
+        loader: ({ params }) => axios.get(`${API_LINK}/menu/${params.id}`),
       },
       {
         path: "all-users",
@@ -80,6 +92,30 @@ export const router = createBrowserRouter([
       },
 
       // user routes
+      {
+        path: "user",
+        element: (
+          <PrivateRoutes>
+            <UserHome />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "payment",
+        element: (
+          <PrivateRoutes>
+            <Payment />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "payment-history",
+        element: (
+          <PrivateRoutes>
+            <PaymentHistory />
+          </PrivateRoutes>
+        ),
+      },
       {
         path: "my-cart",
         element: (

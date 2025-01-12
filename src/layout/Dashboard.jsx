@@ -11,14 +11,6 @@ import Loading from "../components/loading/Loading";
 const Dashboard = () => {
   const [isMenuList, setIsMenuList] = useState(window.innerWidth >= 1024)
   const [isAdmin, isLoading] = useIsAdmin()
-  // const {pathname} = useLocation()
-
-  // TODO: enable the functionality 
-
-  // if(pathname === '/dashboard'){
-  //   if(isAdmin) return <Navigate to='/dashboard/admin' />
-  //   else return <Navigate to='/dashboard/user' />
-  // }
 
   if(isLoading) return <Loading/>
 
@@ -54,7 +46,7 @@ const Dashboard = () => {
           {/* User Routes */}
           <div className="flex flex-col gap-y-2">
           <NavLink to='/dashboard/user'><button><span><AiFillHome /></span> {isMenuList && 'User Home'}</button></NavLink>
-            <NavLink to='/dashboard/reservation'><button><span><FaCalendarAlt /></span> {isMenuList && 'Reservation'}</button></NavLink>
+            <NavLink to='/dashboard/payment'><button><span><FaCalendarAlt /></span> {isMenuList && 'Payment'}</button></NavLink>
             <NavLink to='/dashboard/payment-history'><button><span><FaHistory /></span> {isMenuList && 'Payment History'}</button></NavLink>
             <NavLink to='/dashboard/my-cart'><button><span><FaShoppingCart /></span> {isMenuList && 'My Cart'}</button></NavLink>
             <NavLink to='/dashboard/add-review'><button><span><FaStar /></span> {isMenuList && 'Add Review'}</button></NavLink>

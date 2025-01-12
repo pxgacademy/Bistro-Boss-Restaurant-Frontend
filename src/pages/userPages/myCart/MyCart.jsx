@@ -3,6 +3,7 @@ import Loading from "../../../components/loading/Loading";
 import useCart from "../../../hooks/useCart";
 import useDelete from "../../../hooks/useDelete";
 import DashboardContainer from "../../../components/dashboardContainer/DashboardContainer";
+import { Link } from "react-router-dom";
 
 const MyCart = () => {
   const [carts, isLoading, refetch] = useCart();
@@ -14,15 +15,27 @@ const MyCart = () => {
 
   if (isLoading) return <Loading />;
   return (
-    <DashboardContainer title="Wanna Add More?" subTitle="My Cart" styles='max-w-[370px]'>
-
+    <DashboardContainer
+      title="Wanna Add More?"
+      subTitle="My Cart"
+      styles="max-w-[370px]"
+    >
       <div className="p-5 md:p-10 bg-white mt-10 rounded">
         <div className="uppercase flex items-center justify-between font-bold text-xl">
           <h3>Total Orders: {carts.length}</h3>
           <h3>Total Price: $ {totalPrice}</h3>
-          <button className="bg-primaryColor hover:bg-primaryColor/80 active:scale-95 active:translate-y-1 text-white px-6 py-2 font-semibold text-base rounded-md">
-            Pay
-          </button>
+          <Link
+            onClick={(e) => totalPrice <= 0 && e.preventDefault()}
+            to="/dashboard/payment"
+          >
+            <button
+              className={`${
+                totalPrice <= 0 && "pointer-events-none cursor-not-allowed"
+              } bg-primaryColor hover:bg-primaryColor/80 active:scale-95 active:translate-y-1 text-white px-6 py-2 font-semibold text-base rounded-md`}
+            >
+              Pay
+            </button>
+          </Link>
         </div>
 
         <div className="overflow-x-auto rounded-t-2xl mt-5">

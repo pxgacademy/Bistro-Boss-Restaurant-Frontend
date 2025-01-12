@@ -15,6 +15,7 @@ const useCart = () => {
     // onError: (error) => {
     //   console.error("Error fetching cart data:", error);
     // },
+    enabled: !!user?.email,
     initialData: [],
   });
 
